@@ -1,14 +1,20 @@
 import os
+import sys
 import datetime
 import requests
-from flask import Flask, Response, request, abort
+from flask import Flask, Response, request, abort, __version__
 
 app = Flask(__name__)
-#
-#
-# @app.route('/')
-# def root():
-#     return 'hi'
+
+
+@app.route('/')
+def root():
+    data = [
+        "<b>Welcome</b>",
+        f"Server is running Flask v{__version__} on Python "
+        f"v{sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}-{sys.version_info.releaselevel}",
+    ]
+    return '<br>'.join(data)
 
 
 @app.route('/logproxy', methods=['post'])
