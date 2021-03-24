@@ -16,7 +16,7 @@ def logproxy():
     if 'file' not in request.files:
         abort(400, {'error': 'Missing required field `file`', 'status': 400})
     if 'filename' not in request.values:
-        filename = datetime.datetime.now().strftime('%Y%m%d-%H%M%S%f') + request.files['file'].filename
+        filename = datetime.datetime.now().strftime('%Y%m%d-%H%M%S%f-') + request.files['file'].filename
     else:
         filename = request.values['filename']
     requests.post(os.environ.get('WEBHOOK_URL'), files={'file': (filename, request.files['file'])})
