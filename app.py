@@ -19,6 +19,12 @@ def root():
 
 @app.route('/logproxy', methods=['post'])
 def logproxy():
+    # basic gatekeeping
+    if not request.authorization:
+        abort(401, {'error': 'Authorization header is missing.'})
+    if request.authorization.password != os.environ.get('AUTH_PASS'):
+        abort(401, {'error': 'You are not authorized to perform this action.'})
+
     if 'file' not in request.files:
         abort(400, {'error': 'Missing required field `file`', 'status': 400})
     if 'filename' not in request.values:
